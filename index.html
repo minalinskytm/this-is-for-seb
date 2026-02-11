@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 
   <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <style>
     body {
@@ -95,7 +95,7 @@
   </audio>
   <div class="card" id="introScreen">
     <h1>This message is for you only 💌</h1>
-    <button class="yes" id="startBtn">Okay</button>
+    <button class="yes" id="startBtn" onclick="startSite()">Okay</button>
   </div>
 
   <div class="card" id="mainContent" style="display:none;">
@@ -115,7 +115,7 @@ Alam ko na sinusubukan mo pang mag-build ng trust, at I completely respect where
 
 Whatever pace feels right for you, I’m willing to meet it with patience and understanding. No expectations—just honesty and respect.
 
-And to add I still have the embroidered handkerchief I made for you. If ever na gusto mo kunin, just let me know.
+I still have the embroidered handkerchief I made for you. If ever na gusto mo kunin, just let me know.
 
 I hope the day treats you kindly.
 
@@ -134,104 +134,57 @@ Take care.
   </div>
 
   <script>
-    // CONFIGURATION
-    const EMAILJS_PUBLIC_KEY = 'h4w0Dw31TxrJDB-0e';
-    const EMAILJS_SERVICE_ID = ''; /service_09s7zhu/ ← REQUIRED: put your real service ID here
-    const EMAILJS_TEMPLATE_ID = 'template_6786d8w';
+  // EMAILJS CONFIG
+  const EMAILJS_PUBLIC_KEY = 'h4w0Dw31TxrJDB-0e';
+  const EMAILJS_SERVICE_ID = 'service_09s7zhu';
+  const EMAILJS_TEMPLATE_ID = 'template_6786d8w';
 
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.emailjs) {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-      }
+  function startSite() {
+    const intro = document.getElementById('introScreen');
+    const main = document.getElementById('mainContent');
+    const music = document.getElementById('bgMusic');
 
-      const startBtn = document.getElementById('startBtn');
-      const intro = document.getElementById('introScreen');
-      const main = document.getElementById('mainContent');
-      const music = document.getElementById('bgMusic');
+    if (intro) intro.style.display = 'none';
+    if (main) main.style.display = 'block';
 
-      if (startBtn) {
-        startBtn.addEventListener('click', () => {
-          // hide intro, show main content
-          intro.style.display = 'none';
-          main.style.display = 'block';
-
-          // start fade-in music
-          if (music) {
-            music.volume = 0;
-            music.play().catch(() => {});
-
-            let volume = 0;
-            const fade = setInterval(() => {
-              volume += 0.02;
-              if (volume >= 0.4) {
-                volume = 0.4;
-                clearInterval(fade);
-              }
-              music.volume = volume;
-            }, 150);
-          }
-        });
-      }
-    });
-
-    function respond(answer) {
-      // Play music on first interaction (required by browser autoplay rules)
-      const music = document.getElementById('bgMusic');
-      if (music && music.paused) {
-        music.play().catch(() => {});
-      }
-      const responseEl = document.getElementById('response');
-      const signature = document.querySelector('.signature');
-
-      if (localStorage.getItem('emailSent') === 'true') return;
-
-      localStorage.setItem('valentineAnswer', answer);
-
-      const messages = {
-        yes: "i'm glad that you accept my delight. i won't miss this chance, i promise you. <33",
-        maybe: "don't worry, it's okay. i have no intention to pressure you anyway. thanks for giving this a time. ;))",
-        no: "that's okay, atleast you try to find time to this. i will be happy to whatever you chose. :))"
-      };
-
-      responseEl.innerText = messages[answer] || '';
-      signature.style.display = 'block';
-      signature.classList.add('fade-in');
-
-      // SAFETY CHECK: prevent EmailJS crash if service ID is missing
-      if (!EMAILJS_SERVICE_ID) {
-        console.warn('EmailJS service ID is missing. Email not sent.');
-        return;
-      }
-
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: 'delacruzrevi@gmail.com',
-        answer: answer
-      }).then(() => {
-        localStorage.setItem('emailSent', 'true');
-      }).catch(err => {
-        console.error('EmailJS error:', err);
-      });
-    }
-  
-
-    // Fade-in background music on first interaction (browser-safe)
-    document.addEventListener('click', () => {
-      const music = document.getElementById('bgMusic');
-      if (!music || !music.paused) return;
-
+    if (music && music.paused) {
       music.volume = 0;
       music.play().catch(() => {});
 
       let volume = 0;
       const fade = setInterval(() => {
-        volume += 0.02; // adjust for slower/faster fade
+        volume += 0.02;
         if (volume >= 0.4) {
-          volume = 0.4; // max volume
+          volume = 0.4;
           clearInterval(fade);
         }
         music.volume = volume;
       }, 150);
-    }, { once: true });
-  </script>
+    }
+  }
+
+  function respond(answer) {
+    const responseEl = document.getElementById('response');
+    const signature = document.querySelector('.signature');
+
+    const messages = {
+      yes: "i'm glad that you accept my delight. i won't miss this chance, i promise you. <33",
+      maybe: "don't worry, it's okay. i have no intention to pressure you anyway. thanks for giving this a time. ;))",
+      no: "that's okay, atleast you try to find time to this. it hurts, but i'll be happy to whatever you chose. :))"
+    };
+
+    responseEl.innerText = messages[answer] || '';
+    signature.style.display = 'block';
+    signature.classList.add('fade-in');
+
+    if (window.emailjs) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: 'delacruzrevi@gmail.com',
+        answer: answer
+      }).catch(() => {});
+    }
+  }
+</script>
 </body>
 </html>
