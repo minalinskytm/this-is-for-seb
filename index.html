@@ -25,6 +25,7 @@
       padding: 20px;
     }
     .card {
+      position: relative;
       background: white;
       padding: 35px;
       border-radius: 20px;
@@ -38,7 +39,7 @@
       font-size: 36px;
     }
     .letter {
-      font-size: 25px;
+      font-size: 20px;
       line-height: 1.9;
       color: #333;
       text-align: left;
@@ -87,6 +88,16 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .intro-image {
+      width: 180px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -95,6 +106,7 @@
   </audio>
   <div class="card" id="introScreen">
     <h1>This message is for you only 💌</h1>
+    <img src="seb.jpg" alt="Special Image" class="intro-image">
     <button class="yes" id="startBtn" onclick="startSite()">Okay</button>
   </div>
 
