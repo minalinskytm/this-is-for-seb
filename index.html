@@ -106,7 +106,7 @@
   </audio>
   <div class="card" id="introScreen">
     <h1>This message is for you only 💌</h1>
-    <img src="seb.jpg" alt="Special Image" class="intro-image">
+    <img src="seb.gif" alt="Special GIF" class="intro-image">
     <button class="yes" id="startBtn" onclick="startSite()">Okay</button>
   </div>
 
@@ -118,15 +118,16 @@ Dear Seb,
 
 Happy Valentine’s Day!
 Gusto ko lang mag-share with all honesty and with genuine intentions sa'yo. You’ve been an important part of my life, and the time we shared really meant something to me. Even in those moments, I felt genuinely happy, comfortable, and at ease whenever I was around you.
+
 I still look back fondly sa first time natin nagkakilala at how naturally we connected. I’m also thankful na nag-match tayo ulit at nagkaroon tayo chance nag magkakilala.
-I still think about some moments, and I wish I could have handled things better. Pinagsisisihan ko lahat nang yun.
-I just want you to know that you genuinely matter to me.
-I appreciate your presence in my life and the warmth you bring.
-Even on difficult days, I hope you remember that someone believes in you and wishes you well.
-I’ll continue supporting you in the ways that feel comfortable for both of us.
+
+I still think about some moments, and I wish I could have handled things better. Pinagsisisihan ko lahat ng yun.
+
 Alam ko na sinusubukan mo pang mag-build ng trust, at I completely respect where you are. I don’t want to rush or put pressure on anything. I just want you to know na sincere ang intentions ko at I truly value the connection we have.
+
 Whatever pace feels right for you, I’m willing to meet it with patience and understanding. No expectations—just honesty and respect.
-I still have the embroidered handkerchief I made for you. If ever that you like, just let me know.
+
+I still have the embroidered handkerchief I made for you. If ever na gusto mo kunin, just let me know.
 
 I hope the day treats you kindly.
 
@@ -134,6 +135,8 @@ Take care.
 
 <span class="signature">— From Revi</span>
     </div>
+
+    <img src="happy-cat.gif" alt="Cute GIF" class="intro-image">
 
     <div class="question">Is it okay ba for you to be a part of my Valentine?</div>
 
@@ -179,9 +182,9 @@ Take care.
     const signature = document.querySelector('.signature');
 
     const messages = {
-      yes: "i'm glad that you accept my delight. i won't miss this chance, i promise you. <33",
+      yes: "thank you! i won't miss any chance",
       maybe: "don't worry, it's okay. i have no intention to pressure you anyway. thanks for giving this a time. ;))",
-      no: "that's okay, atleast you try to find time to this. it hurts, but i'll be happy to whatever you chose. :))"
+      no: "that's okay, atleast you try to find time to this. i'll wait :))"
     };
 
     responseEl.innerText = messages[answer] || '';
