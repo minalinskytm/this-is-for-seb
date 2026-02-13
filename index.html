@@ -73,7 +73,7 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 <!-- INTRO -->
 <div class="screen active" id="intro">
   <div class="box">
-    <img src="your-intro-gif.gif" class="gif">
+    <img src="seb.gif" class="gif">
     <h1>Hi Seb 💗</h1>
     <p>I have something for you.</p>
     <button onclick="showLetter()">Open</button>
@@ -137,7 +137,7 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 <!-- QUESTION -->
 <div class="screen" id="question">
   <div class="box">
-    <img src="your-question-gif.gif" class="gif">
+    <img src="happy-cat.gif" class="gif">
     <h1>Is it okay for you to be a part of my Valentine’s?</h1>
 
     <button onclick="sendAnswer('Yes 💖')">Yes 💖</button>
@@ -156,9 +156,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showLetter() {
+
+  // Switch screens
   document.getElementById("intro").classList.remove("active");
   document.getElementById("letter").classList.add("active");
   window.scrollTo(0,0);
+
+  // Start music on click
+  const music = document.getElementById("bgMusic");
+  music.volume = 0;
+  music.play();
+
+  // Smooth fade-in
+  let fade = setInterval(() => {
+    if (music.volume < 0.3) {
+      music.volume += 0.02;
+    } else {
+      clearInterval(fade);
+    }
+  }, 200);
 }
 
 function showQuestion() {
@@ -176,7 +192,7 @@ function sendAnswer(choice) {
   buttons.forEach(btn => btn.disabled = true);
 
   // Send silently (no visible confirmation)
-  emailjs.send("service_09s7zhu", "template_6786d8w", {
+  emailjs.send("service_09s7zhu", "service_09s7zhu", {
     answer: choice,
     time: new Date().toLocaleString()
   });
@@ -184,7 +200,7 @@ function sendAnswer(choice) {
   // Show emotional dialogue only
   if (choice.includes("Yes")) {
       responseDiv.innerHTML =
-      "That makes me really happy. 💖 Thank you for giving a chance. I won't miss any oppurtunity.";
+      "That makes me really happy. 💖 Thank you for giving us a chance. I promise to cherish this gently and sincerely.";
   }
   else if (choice.includes("Maybe")) {
       responseDiv.innerHTML =
