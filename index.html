@@ -70,11 +70,16 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 
 <body>
 
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <!-- INTRO -->
 <div class="screen active" id="intro">
   <div class="box">
     <img src="seb.gif" class="gif">
-    <h1>Hi Seb 💗</h1>
+    <h1>Hi Seb💗</h1>
     <p>I have something for you.</p>
     <button onclick="showLetter()">Open</button>
   </div>
@@ -83,6 +88,7 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 <!-- LETTER -->
 <div class="screen" id="letter">
   <div class="box letter">
+
     <p><strong>Dear Seb,</strong></p>
 
     <p>Happy Valentine’s Day!</p>
@@ -123,7 +129,6 @@ button:disabled { background: #ccc; cursor: not-allowed; }
     <p>I hope the day treats you kindly.</p>
     <p>Take care.</p>
 
-    <!-- LETTER IMAGE -->
     <div style="text-align:center; margin-top:30px;">
       <img src="your-letter-image.jpg"
            style="max-width:100%; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
@@ -150,31 +155,31 @@ button:disabled { background: #ccc; cursor: not-allowed; }
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  emailjs.init({
-    publicKey: "service_09s7zhu"
-  });
+  emailjs.init("h4w0Dw31TxrJDB-0e"); // 🔥 Replace with your actual PUBLIC key (not service ID)
 });
 
 function showLetter() {
 
-  // Switch screens
   document.getElementById("intro").classList.remove("active");
   document.getElementById("letter").classList.add("active");
   window.scrollTo(0,0);
 
-  // Start music on click
   const music = document.getElementById("bgMusic");
-  music.volume = 0;
-  music.play();
 
-  // Smooth fade-in
-  let fade = setInterval(() => {
-    if (music.volume < 0.3) {
-      music.volume += 0.02;
-    } else {
-      clearInterval(fade);
-    }
-  }, 200);
+  music.volume = 0;
+  music.play().then(() => {
+
+    let fade = setInterval(() => {
+      if (music.volume < 0.3) {
+        music.volume += 0.02;
+      } else {
+        clearInterval(fade);
+      }
+    }, 200);
+
+  }).catch(err => {
+    console.log("Playback blocked:", err);
+  });
 }
 
 function showQuestion() {
@@ -188,31 +193,27 @@ function sendAnswer(choice) {
   const responseDiv = document.getElementById("response");
   const buttons = document.querySelectorAll("#question button");
 
-  // Disable buttons
   buttons.forEach(btn => btn.disabled = true);
 
-  // Send silently (no visible confirmation)
-  emailjs.send("service_09s7zhu", "service_09s7zhu", {
+  emailjs.send("service_09s7zhu", "template_6786d8w", {
     answer: choice,
     time: new Date().toLocaleString()
   });
 
-  // Show emotional dialogue only
   if (choice.includes("Yes")) {
       responseDiv.innerHTML =
-      "That makes me really happy. 💖 Thank you for giving us a chance. I promise to cherish this gently and sincerely.";
+      "That makes me really happy. I won't miss this chance.";
   }
   else if (choice.includes("Maybe")) {
       responseDiv.innerHTML =
-      "That’s okay. 🌸 I appreciate your honesty. Take all the time you need — I’ll be here with patience and understanding.";
+      "That’s okay. I'm not pressuring you. Take all the time you need.";
   }
   else {
       responseDiv.innerHTML =
-      "I understand. 🌙 Thank you for being honest with me. No matter what, I still wish you warmth and happiness.";
+      "I understand. Thank you for being honest with me. I'll still be waiting.";
   }
 }
 </script>
 
 </body>
 </html>
-
