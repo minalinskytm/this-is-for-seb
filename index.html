@@ -1,213 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valentine's Confession</title>
+<meta charset="UTF-8">
+<title>Valentine Letter</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-  <!-- Journal-style font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  background: #f6d5e1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 0;
+}
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
 
-  <style>
-    body {
-      font-family: 'Caveat', cursive;
-      background: linear-gradient(135deg, #ffb3c6, #ffe5ec);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 20px;
-    }
-    .card {
-      position: relative;
-      background: white;
-      padding: 35px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 650px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-    }
-    h1 {
-      color: #e63946;
-      margin-bottom: 20px;
-      font-size: 36px;
-    }
-    .letter {
-      font-size: 20px;
-      line-height: 1.9;
-      color: #333;
-      text-align: left;
-      margin-bottom: 30px;
-      white-space: pre-line;
-    }
-    .question {
-      font-size: 22px;
-      font-weight: bold;
-      color: #e63946;
-      margin-bottom: 20px;
-    }
-    button {
-      font-size: 18px;
-      padding: 10px 25px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      margin: 8px;
-    }
-    .yes { background-color: #ff4d6d; color: white; }
-    .maybe { background-color: #ffb703; color: white; }
-    .no { background-color: #adb5bd; color: white; }
+.active { display: block; }
 
-    #response {
-      margin-top: 25px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #e63946;
-      min-height: 1.5em;
-    }
+.box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
 
-    .signature {
-      display: none;
-      margin-top: 20px;
-      font-family: 'Brush Script MT', 'Segoe Script', cursive;
-      font-size: 22px;
-      color: #e63946;
-    }
+.letter {
+  text-align: left;
+  font-size: 22px;
+  line-height: 1.6;
+}
 
-    .fade-in {
-      animation: fadeIn 0.8s ease forwards;
-    }
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #ff8fb1;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Caveat', cursive;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+button:hover { background: #ff5f93; }
+button:disabled { background: #ccc; cursor: not-allowed; }
 
-    .intro-image {
-      width: 180px;
-      margin: 20px auto;
-      display: block;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+.gif {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.response {
+  margin-top: 20px;
+  font-size: 20px;
+}
+</style>
 </head>
+
 <body>
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-  <div class="card" id="introScreen">
-    <h1>This message is for you only 💌</h1>
-    <img src="seb.gif" alt="Special GIF" class="intro-image">
-    <button class="yes" id="startBtn" onclick="startSite()">Okay</button>
+
+<!-- INTRO -->
+<div class="screen active" id="intro">
+  <div class="box">
+    <img src="your-intro-gif.gif" class="gif">
+    <h1>Hi Seb 💗</h1>
+    <p>I have something for you.</p>
+    <button onclick="showLetter()">Open</button>
   </div>
+</div>
 
-  <div class="card" id="mainContent" style="display:none;">
-    <h1> This is for you only! 💌</h1>
+<!-- LETTER -->
+<div class="screen" id="letter">
+  <div class="box letter">
+    <p><strong>Dear Seb,</strong></p>
 
-    <div class="letter fade-in">
-Dear Seb,
+    <p>Happy Valentine’s Day!</p>
 
-Happy Valentine’s Day!
-Gusto ko lang mag-share with all honesty and with genuine intentions sa'yo. 
-You’ve been an important part of my life, and the time we shared really meant something to me. 
-Even in those moments, I felt genuinely happy, comfortable, and at ease whenever I was around you.
+    <p>
+    Gusto ko lang mag-share with all honesty and with genuine intentions sa'yo.
+    You’ve been an important part of my life, and the time we shared really meant something to me.
+    Even in those moments, I felt genuinely happy, comfortable, and at ease whenever I was around you.
+    </p>
 
-I still look back fondly sa first time natin nagkakilala at how naturally we connected. 
-I’m also thankful na nag-match tayo ulit at nagkaroon tayo chance nag magkakilala.
-I still think about some moments, and I wish I could have handled things better. Pinagsisisihan ko lahat ng yun.
+    <p>
+    I still look back fondly sa first time natin nagkakilala at how naturally we connected.
+    I’m also thankful na nag-match tayo ulit at nagkaroon tayo chance nag magkakilala.
+    I still think about some moments, and I wish I could have handled things better.
+    Pinagsisisihan ko lahat nang yun.
+    </p>
 
-I just want you to know that you genuinely matter to me.
-I appreciate your presence in my life and the warmth you bring.
-Even on difficult days, I hope you remember that someone believes in you and wishes you well.
-I’ll continue supporting you in the ways that feel comfortable for both of us.
-      
-Alam ko na sinusubukan mo pang mag-build ng trust, at I completely respect where you are. 
-I don’t want to rush or put pressure on anything. 
-I just want you to know na sincere ang intentions ko at I truly value the connection we have.
+    <p>
+    I just want you to know that you genuinely matter to me.
+    I appreciate your presence in my life and the warmth you bring.
+    Even on difficult days, I hope you remember that someone believes in you and wishes you well.
+    </p>
 
-Whatever pace feels right for you, I’m willing to meet it with patience and understanding. 
-No expectations—just honesty and respect.
-I still have the embroidered handkerchief I made for you. If ever na magustuhan mo, just let me know.
+    <p>
+    I’ll continue supporting you in the ways that feel comfortable for both of us.
+    Alam ko na sinusubukan mo pang mag-build ng trust, at I completely respect where you are.
+    I don’t want to rush or put pressure on anything.
+    I just want you to know na sincere ang intentions ko at I truly value the connection we have.
+    </p>
 
-I hope the day treats you kindly.
+    <p>
+    Whatever pace feels right for you, I’m willing to meet it with patience and understanding.
+    No expectations—just honesty and respect.
+    I still have the embroidered handkerchief I made for you.
+    If ever that you like, just let me know.
+    </p>
 
-Take care.
+    <p>I hope the day treats you kindly.</p>
+    <p>Take care.</p>
 
-<span class="signature">— From Revi</span>
+    <!-- LETTER IMAGE -->
+    <div style="text-align:center; margin-top:30px;">
+      <img src="your-letter-image.jpg"
+           style="max-width:100%; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
     </div>
 
-    <img src="happy-cat.gif" alt="Cute GIF" class="intro-image">
-
-    <div class="question">Is it okay ba for you to be a part of my Valentine?</div>
-
-    <button class="yes" onclick="respond('yes')">Yes</button>
-    <button class="maybe" onclick="respond('maybe')">Maybe</button>
-    <button class="no" onclick="respond('no')">No</button>
-
-    <div id="response"></div>
+    <br>
+    <button onclick="showQuestion()">Continue</button>
   </div>
+</div>
 
-  <script>
-  // EMAILJS CONFIG
-  const EMAILJS_PUBLIC_KEY = 'h4w0Dw31TxrJDB-0e';
-  const EMAILJS_SERVICE_ID = 'service_09s7zhu';
-  const EMAILJS_TEMPLATE_ID = 'template_6786d8w';
+<!-- QUESTION -->
+<div class="screen" id="question">
+  <div class="box">
+    <img src="your-question-gif.gif" class="gif">
+    <h1>Is it okay for you to be a part of my Valentine’s?</h1>
 
-  function startSite() {
-    const intro = document.getElementById('introScreen');
-    const main = document.getElementById('mainContent');
-    const music = document.getElementById('bgMusic');
+    <button onclick="sendAnswer('Yes 💖')">Yes 💖</button>
+    <button onclick="sendAnswer('Maybe 🌸')">Maybe 🌸</button>
+    <button onclick="sendAnswer('No 🌙')">No 🌙</button>
 
-    if (intro) intro.style.display = 'none';
-    if (main) main.style.display = 'block';
+    <div class="response" id="response"></div>
+  </div>
+</div>
 
-    if (music && music.paused) {
-      music.volume = 0;
-      music.play().catch(() => {});
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  emailjs.init({
+    publicKey: "service_09s7zhu"
+  });
+});
 
-      let volume = 0;
-      const fade = setInterval(() => {
-        volume += 0.02;
-        if (volume >= 0.4) {
-          volume = 0.4;
-          clearInterval(fade);
-        }
-        music.volume = volume;
-      }, 150);
-    }
+function showLetter() {
+  document.getElementById("intro").classList.remove("active");
+  document.getElementById("letter").classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function showQuestion() {
+  document.getElementById("letter").classList.remove("active");
+  document.getElementById("question").classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function sendAnswer(choice) {
+
+  const responseDiv = document.getElementById("response");
+  const buttons = document.querySelectorAll("#question button");
+
+  // Disable buttons
+  buttons.forEach(btn => btn.disabled = true);
+
+  // Send silently (no visible confirmation)
+  emailjs.send("service_09s7zhu", "template_6786d8w", {
+    answer: choice,
+    time: new Date().toLocaleString()
+  });
+
+  // Show emotional dialogue only
+  if (choice.includes("Yes")) {
+      responseDiv.innerHTML =
+      "That makes me really happy. 💖 Thank you for giving a chance. I won't miss any oppurtunity.";
   }
-
-  function respond(answer) {
-    const responseEl = document.getElementById('response');
-    const signature = document.querySelector('.signature');
-
-    const messages = {
-      yes: "thank you! i won't miss any chance",
-      maybe: "don't worry, it's okay. i have no intention to pressure you anyway. thanks for giving this a time. ;))",
-      no: "that's okay, atleast you try to find time to this. i'll wait :))"
-    };
-
-    responseEl.innerText = messages[answer] || '';
-    signature.style.display = 'block';
-    signature.classList.add('fade-in');
-
-    if (window.emailjs) {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: 'delacruzrevi@gmail.com',
-        answer: answer
-      }).catch(() => {});
-    }
+  else if (choice.includes("Maybe")) {
+      responseDiv.innerHTML =
+      "That’s okay. 🌸 I appreciate your honesty. Take all the time you need — I’ll be here with patience and understanding.";
   }
+  else {
+      responseDiv.innerHTML =
+      "I understand. 🌙 Thank you for being honest with me. No matter what, I still wish you warmth and happiness.";
+  }
+}
 </script>
+
 </body>
 </html>
+
